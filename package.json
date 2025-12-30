@@ -3,10 +3,7 @@
   "version": "0.1.0",
   "description": "Conductor plugin for OpenCode",
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/derekbar90/opencode-conductor.git"
-  },
+  "repository": "derekbar90/opencode-conductor",
   "keywords": [
     "opencode",
     "plugin",
@@ -21,7 +18,8 @@
   },
   "homepage": "https://github.com/derekbar90/opencode-conductor#readme",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

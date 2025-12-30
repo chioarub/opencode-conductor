@@ -29,11 +29,24 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
+            - name: Build
 
-      - name: Semantic Release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: npm run build
+
+      
+
+            - name: Semantic Release
+
+              run: |
+
+                echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+
+                npx semantic-release
+
+              env:
+
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+                NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      
