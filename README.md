@@ -1,63 +1,69 @@
 # Conductor Plugin for OpenCode
 
-**Measure twice, code once.**
+> **Measure twice, code once.**
 
-Conductor is an OpenCode plugin that enables **Context-Driven Development**. It turns OpenCode into a proactive project manager that follows a strict protocol to specify, plan, and implement software features and bug fixes.
+Conductor is a specialized OpenCode plugin designed to enforce a rigorous, **Context-Driven Development** lifecycle. It transforms OpenCode from a reactive coding tool into a proactive project architect that follows a strict protocol to specify, plan, and implement software features and bug fixes.
 
-Instead of just writing code, Conductor ensures a consistent, high-quality lifecycle for every task: **Context -> Spec & Plan -> Implement**.
-
-The philosophy behind Conductor is simple: **control your code**. By treating context as a managed artifact alongside your code, you transform your repository into a single source of truth that drives every agent interaction with deep, persistent project awareness.
+The philosophy is simple: **control your code by controlling your context.** By treating project requirements and plans as managed artifacts, Conductor ensures every agent interaction is grounded in deep, persistent project awareness.
 
 ---
 
 ## 🚀 Key Features
 
-- **Specialized `@conductor` Agent**: A dedicated subagent that acts as a Project Architect and Stewardship officer.
-- **Native Slash Commands**: Quick shortcuts like `/c-setup`, `/c-new`, and `/c-implement`.
-- **Plan Before You Build**: Automated generation of `spec.md` and `plan.md` based on your project's unique context.
-- **Maturity Aware**: Intelligent initialization for both new (Greenfield) and existing (Brownfield) projects.
-- **Smart Revert**: A Git-aware revert command that understands logical units of work (tracks, phases, tasks).
-- **Synergy with Sisyphus**: Seamlessly integrates with [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode).
+*   **Specialized `@conductor` Agent**: A dedicated subagent that acts as your Project Architect and Technical Lead.
+*   **Native Slash Commands**: Integrated shortcuts like `/c-setup`, `/c-new`, and `/c-implement` for frictionless project management.
+*   **Protocol-Driven Workflow**: Automated enforcement of the **Context -> Spec -> Plan -> Implement** lifecycle.
+*   **Smart Revert**: A Git-aware revert system that understands logical units of work (Tracks, Phases, Tasks) instead of just raw commit hashes.
+*   **19+ Style Templates**: Built-in support for a vast range of languages including Rust, Solidity, Zig, Julia, Kotlin, Swift, and more.
+*   **Zero-Config Bootstrap**: Automatically installs agents and commands to your global OpenCode configuration on first run.
+*   **Sisyphus Synergy**: Optimized to work alongside [OhMyOpenCode](https://github.com/code-yeongyu/oh-my-opencode) for a multi-agent team experience.
 
-## 🛠️ Usage
+---
 
-Conductor manages the entire lifecycle of your development tasks via the `@conductor` agent.
+## 🛠️ The Conductor Lifecycle
 
-### 1. Set Up the Project (Run Once)
-Initializes the `conductor/` directory with your project's "Constitution" (Product vision, Tech Stack, and Workflow rules).
-```bash
-/c-setup
-```
+Conductor organizes your work into **Tracks** (features or bug fixes). Every Track follows three mandatory phases:
 
-### 2. Start a New Track (Feature or Bug)
-Initializes a **track** — a high-level unit of work. Conductor helps you generate a detailed specification and an actionable implementation plan.
-```bash
-/c-new "Add user authentication using OAuth"
-```
+### 1. Project Initialization (`/c-setup`)
+Run this once per project. The `@conductor` agent will interview you to define:
+*   **Product Vision**: Target users, core goals, and primary features.
+*   **Tech Stack**: Languages, frameworks, and databases.
+*   **Workflow Rules**: Testing standards (e.g., TDD), commit strategies, and documentation patterns.
 
-### 3. Implement the Track
-The agent works through the `plan.md` file, checking off tasks as it completes them, following your workflow strictly (e.g., TDD, commit strategy).
-```bash
-/c-implement
-```
+### 2. Track Planning (`/c-new`)
+When you're ready for a new task, tell Conductor what you want to build.
+*   **Specification (`spec.md`)**: Conductor asks 3-5 targeted questions to clarify the "What" and "Why".
+*   **Implementation Plan (`plan.md`)**: Once the spec is approved, Conductor generates a step-by-step checklist adhering to your project's workflow rules.
 
-### 4. Check Status & Revert
-Monitor progress or undo specific logical units of work.
-```bash
-/c-status
-/c-revert "last task"
-```
+### 3. Autonomous Implementation (`/c-implement`)
+The agent works through the `plan.md` checklist, executing tasks, running tests, and making semantic commits automatically until the Track is complete.
 
 ---
 
 ## 📦 Installation
 
-Please see [INSTALL.md](./INSTALL.md) for detailed instructions on building and installing the plugin globally.
+Add the plugin to your global OpenCode configuration file. OpenCode will automatically fetch and install it from NPM.
+
+**File:** `~/.config/opencode/opencode.json`
+
+```json
+{
+  "plugin": [
+    "opencode-conductor-plugin"
+  ]
+}
+```
+
+*Note: Please restart OpenCode after the first run to enable the global slash commands.*
+
+---
 
 ## ⚙️ Configuration
 
-You can customize the model used by the `@conductor` agent in your global `opencode.json` or `oh-my-opencode.json`:
+We highly recommend pinning the `@conductor` agent to a "flash" model for optimal performance during planning phases.
 
+### Standard OpenCode Config
+**File:** `~/.config/opencode/opencode.json`
 ```json
 {
   "agent": {
@@ -68,24 +74,49 @@ You can customize the model used by the `@conductor` agent in your global `openc
 }
 ```
 
----
-
-## 🤝 Synergy with oh-my-opencode
-
-If you are using the **OhMyOpenCode** suite, `@conductor` acts as your Technical Lead. While **Sisyphus** manages the overall conversation, he can delegate specialized planning and architectural enforcement tasks to the `@conductor` agent.
-
----
-
-## 📈 Automated Versioning & Release
-
-This project uses **Semantic Release** to automate versioning and NPM publishing. Version numbers are automatically determined based on commit messages following the [Conventional Commits](https://www.conventionalcommits.org/) specification:
-
-- `fix:` triggers a **patch** release (e.g., 0.1.0 -> 0.1.1)
-- `feat:` triggers a **minor** release (e.g., 0.1.0 -> 0.2.0)
-- `BREAKING CHANGE:` in footer triggers a **major** release (e.g., 0.1.0 -> 1.0.0)
+### OhMyOpenCode Config
+**File:** `~/.config/opencode/oh-my-opencode.json`
+```json
+{
+  "agents": {
+    "conductor": {
+      "model": "google/gemini-3-flash"
+    }
+  }
+}
+```
 
 ---
 
-## 📜 Legal
+## 📋 Commands Reference
 
-- License: [Apache License 2.0](LICENSE)
+| Command | Description |
+| :--- | :--- |
+| `/c-setup` | Initialize the `conductor/` directory and project "Constitution". |
+| `/c-new "desc"` | Start a new feature/bug Track with spec and plan generation. |
+| `/c-implement` | Start implementing the next pending task in the current track. |
+| `/c-status` | Get a high-level overview of project progress and active tracks. |
+| `/c-revert` | Interactively select a task, phase, or track to undo via Git. |
+
+---
+
+## 🤝 Synergy with OhMyOpenCode
+
+If you use the **OhMyOpenCode** suite, `@conductor` acts as your Technical Lead. While **Sisyphus** manages the general conversation and orchestration, he can delegate complex architectural planning and protocol enforcement to the `@conductor` agent. 
+
+Conductor includes built-in "Loop Protection" to ensure it never conflicts with OhMyOpenCode's continuation enforcers during interactive Q&A sessions.
+
+---
+
+## 📈 Automated Versioning
+
+This project follows **Conventional Commits**. Releases are automated via Semantic Release:
+- `feat:` -> Minor version bump
+- `fix:` -> Patch version bump
+- `BREAKING CHANGE:` -> Major version bump
+
+---
+
+## 📜 License
+
+Distributed under the [Apache License 2.0](LICENSE).
