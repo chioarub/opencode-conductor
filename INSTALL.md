@@ -2,41 +2,9 @@
 
 Follow these steps to install the Conductor plugin into your OpenCode environment.
 
-## Prerequisites
+## 🚀 Simple Installation (Recommended)
 
-*   [OpenCode](https://opencode.ai/) installed and configured.
-*   Node.js and npm installed.
-
-## 1. Build and Package
-
-First, clone this repository and generate the distributable package:
-
-```bash
-# Install dependencies
-npm install
-
-# Build the TypeScript code
-npm run build
-
-# Create the npm tarball (.tgz)
-npm pack
-```
-
-This will create a file named something like `opencode-conductor-0.1.0.tgz`.
-
-## 2. Global Installation
-
-Install the generated tarball into your global OpenCode configuration directory. This ensures that the plugin and its dependencies (like `smol-toml`) are available to OpenCode.
-
-```bash
-# Replace <path-to-tgz> with the absolute path to the file generated in step 1
-cd ~/.config/opencode
-npm install <path-to-tgz>
-```
-
-## 3. Register the Plugin
-
-Add the plugin to your global `opencode.json` file:
+Add the plugin to your global `opencode.json` file. OpenCode will automatically install it from NPM.
 
 **File:** `~/.config/opencode/opencode.json`
 
@@ -48,17 +16,41 @@ Add the plugin to your global `opencode.json` file:
 }
 ```
 
-## 4. Install the Conductor Agent (Required)
+### First-Run Setup
+The first time you start OpenCode with the plugin, it will automatically install the `@conductor` agent and slash commands to your global configuration. You will see a notification when this is complete. **Please restart OpenCode after this first run to enable the slash commands.**
 
-To register the `@conductor` agent, copy the agent definition to your global OpenCode agent directory:
+---
+
+## 🛠️ Manual / Development Installation
+
+If you want to install from source or for development:
+
+### 1. Build and Package
 
 ```bash
-mkdir -p ~/.config/opencode/agent
-cp src/prompts/agent/conductor.md ~/.config/opencode/agent/
+npm install
+npm run build
+npm pack
 ```
 
-### Configure the Agent Model (Optional but Recommended)
-By default, the agent will use your session's default model. We recommend pinning it to a "flash" model for speed.
+This generates `opencode-conductor-0.1.0.tgz`.
+
+### 2. Global Installation
+
+```bash
+cd ~/.config/opencode
+npm install <path-to-tgz>
+```
+
+### 3. Register and Bootstrap
+Add `"opencode-conductor"` to your `opencode.json` as shown in the simple installation section above. The plugin will handle copying the agent and command files automatically on its first run.
+
+---
+
+## ⚙️ Configuration
+
+### Agent Model
+By default, the `@conductor` agent uses your session's default model. We highly recommend pinning it to a "flash" model for speed and efficiency.
 
 **In `~/.config/opencode/opencode.json`:**
 ```json
@@ -71,50 +63,11 @@ By default, the agent will use your session's default model. We recommend pinnin
 }
 ```
 
-## 5. Install Slash Commands (Recommended)
+## 🛠️ Commands Available
 
-To make the Conductor workflows easily accessible via `/` commands in the OpenCode TUI, install the command definitions:
-
-```bash
-mkdir -p ~/.config/opencode/command
-cp src/prompts/commands/*.md ~/.config/opencode/command/
-```
-
-## 6. Verify Installation
-
-Restart your OpenCode session. You should see a toast notification saying "Conductor initialized".
-
-Try the following to verify:
-*   Type `@` to see if `conductor` appears in the agent list.
-*   Type `/` to see the `c-` prefixed commands.
-*   Run `/c-setup` to start the project initialization.
-
----
-
-## Manual File Creation (If needed)
-
-If you cannot copy the files from the source, create them manually in `~/.config/opencode/`:
-
-### `agent/conductor.md`
-```markdown
----
-description: Spec-Driven Development Architect. Manages the project lifecycle using the Conductor protocol.
-mode: subagent
-tools:
-  conductor_setup: true
-  conductor_new_track: true
-  conductor_implement: true
-  conductor_status: true
-  conductor_revert: true
----
-[Insert contents of src/prompts/agent.md here]
-```
-
-### `command/c-setup.md`
-```markdown
----
-description: Setup or resume Conductor environment
-agent: conductor
----
-Invoke the conductor_setup tool to start or resume the project initialization. Do NOT create todos during this phase.
-```
+Once installed and restarted, you can use:
+*   **/c-setup**: Initialize project context.
+*   **/c-new**: Create a new feature/bug track.
+*   **/c-implement**: Start coding.
+*   **/c-status**: View progress.
+*   **/c-revert**: Undo work.

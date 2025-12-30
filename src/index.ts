@@ -5,6 +5,7 @@ import { newTrackCommand } from "./commands/newTrack.js";
 import { implementCommand } from "./commands/implement.js";
 import { statusCommand } from "./commands/status.js";
 import { revertCommand } from "./commands/revert.js";
+import { bootstrap } from "./utils/bootstrap.js";
 import { readFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -14,6 +15,7 @@ const __dirname = dirname(__filename);
 
 const ConductorPlugin: Plugin = async (ctx) => {
   console.log("[Conductor] Plugin loading...");
+  await bootstrap(ctx);
 
   return {
     config: async (config) => {
