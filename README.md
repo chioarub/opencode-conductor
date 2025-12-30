@@ -76,6 +76,16 @@ If you are using the **OhMyOpenCode** suite, `@conductor` acts as your Technical
 
 ---
 
+## 📈 Automated Versioning & Release
+
+This project uses **Semantic Release** to automate versioning and NPM publishing. Version numbers are automatically determined based on commit messages following the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+- `fix:` triggers a **patch** release (e.g., 0.1.0 -> 0.1.1)
+- `feat:` triggers a **minor** release (e.g., 0.1.0 -> 0.2.0)
+- `BREAKING CHANGE:` in footer triggers a **major** release (e.g., 0.1.0 -> 1.0.0)
+
+---
+
 ## 📜 Legal
 
 - License: [Apache License 2.0](LICENSE)
