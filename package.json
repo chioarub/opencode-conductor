@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsc && npm run copy-prompts",
-    "copy-prompts": "mkdir -p dist/prompts && cp src/prompts/*.toml dist/prompts/",
+    "copy-prompts": "mkdir -p dist/prompts && cp src/prompts/*.toml src/prompts/*.md dist/prompts/",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
