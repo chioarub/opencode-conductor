@@ -19,6 +19,9 @@ export const setupCommand = (ctx: any): ToolDefinition =>
       // Resolve the absolute path to the templates directory in the distribution
       const templatesDir = join(__dirname, "../templates");
       
-      return await loadPrompt("setup.toml", { templatesDir });
+      return await loadPrompt("setup.toml", { 
+        templatesDir,
+        isOMOActive: ctx.isOMOActive ? "true" : "false"
+      });
     },
   });

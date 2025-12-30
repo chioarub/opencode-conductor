@@ -15,6 +15,8 @@ export const implementCommand = (ctx: any): ToolDefinition =>
            return "Conductor is not set up. Please run `conductor_setup`.";
        }
 
-       return await loadPrompt("implement.toml");
+       return await loadPrompt("implement.toml", {
+         isOMOActive: ctx.isOMOActive ? "true" : "false"
+       });
     },
   });

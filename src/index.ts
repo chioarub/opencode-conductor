@@ -5,17 +5,26 @@ import { newTrackCommand } from "./commands/newTrack.js";
 import { implementCommand } from "./commands/implement.js";
 import { statusCommand } from "./commands/status.js";
 import { revertCommand } from "./commands/revert.js";
+import { join } from "path";
+import { homedir } from "os";
+import { existsSync } from "fs";
 
 const ConductorPlugin: Plugin = async (ctx) => {
-  console.log("[Conductor] Plugin tools loaded.");
+  // Detect oh-my-opencode for synergy features
+  const omoPath = join(homedir(), ".config", "opencode", "node_modules", "oh-my-opencode");
+  const isOMOActive = existsSync(omoPath);
+
+  console.log(`[Conductor] Plugin tools loaded. (OMO Synergy: ${isOMOActive ? "Enabled" : "Disabled"})`);
+
+  const extendedCtx = { ...ctx, isOMOActive };
 
   return {
     tool: {
-      conductor_setup: setupCommand(ctx),
-      conductor_new_track: newTrackCommand(ctx),
-      conductor_implement: implementCommand(ctx),
-      conductor_status: statusCommand(ctx),
-      conductor_revert: revertCommand(ctx),
+      conductor_setup: setupCommand(extendedCtx),
+      conductor_new_track: newTrackCommand(extendedCtx),
+      conductor_implement: implementCommand(extendedCtx),
+      conductor_status: statusCommand(extendedCtx),
+      conductor_revert: revertCommand(extendedCtx),
     },
   };
 };

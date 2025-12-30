@@ -11,12 +11,14 @@ export const newTrackCommand = (ctx: any): ToolDefinition =>
     },
     async execute(args: { description?: string }) {
        const conductorDir = join(ctx.directory, "conductor");
-       if (!existsSync(join(conductorDir, "product.md")) || 
-           !existsSync(join(conductorDir, "workflow.md"))) {
+       if (!existsSync(join(conductorDir, "product.md"))) {
            return "Conductor is not set up. Please run `conductor_setup`.";
        }
 
        // Map the description to {{args}} in the legacy TOML
-       return await loadPrompt("newTrack.toml", { args: args.description || "" });
+       return await loadPrompt("newTrack.toml", { 
+         args: args.description || "",
+         isOMOActive: ctx.isOMOActive ? "true" : "false"
+       });
     },
   });

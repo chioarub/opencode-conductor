@@ -21,24 +21,20 @@ export async function bootstrap(ctx: any) {
   if (!existsSync(targetAgentDir)) mkdirSync(targetAgentDir, { recursive: true });
   if (!existsSync(targetCommandDir)) mkdirSync(targetCommandDir, { recursive: true });
 
-  // 2. Install Agent if missing
+  // 2. Install/Update Agent
   const targetAgentFile = join(targetAgentDir, "conductor.md");
-  if (!existsSync(targetAgentFile)) {
-    if (existsSync(sourceAgentFile)) {
-      copyFileSync(sourceAgentFile, targetAgentFile);
-      installedAnything = true;
-    }
+  if (existsSync(sourceAgentFile)) {
+    copyFileSync(sourceAgentFile, targetAgentFile);
+    installedAnything = true;
   }
 
-  // 3. Install Commands if missing
+  // 3. Install/Update Commands
   if (existsSync(sourceCommandsDir)) {
     const commands = readdirSync(sourceCommandsDir);
     for (const cmdFile of commands) {
       const targetCmdFile = join(targetCommandDir, cmdFile);
-      if (!existsSync(targetCmdFile)) {
-        copyFileSync(join(sourceCommandsDir, cmdFile), targetCmdFile);
-        installedAnything = true;
-      }
+      copyFileSync(join(sourceCommandsDir, cmdFile), targetCmdFile);
+      installedAnything = true;
     }
   }
 
