@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/derekbar90/opencode-conductor/compare/v1.0.0...v1.1.0) (2025-12-30)
+
+
+### Features
+
+* add Julia style template to trigger release ([4e12120](https://github.com/derekbar90/opencode-conductor/commit/4e121200e4b4f4f0fe40f90436e5acb4594930bd))
+
 # 1.0.0 (2025-12-30)
 
 
