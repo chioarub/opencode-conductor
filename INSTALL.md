@@ -48,67 +48,73 @@ Add the plugin to your global `opencode.json` file:
 }
 ```
 
-## 4. Install Slash Commands (Recommended)
+## 4. Install the Conductor Agent (Required)
 
-To make the Conductor workflows easily accessible via `/` commands in the OpenCode TUI, you should install the command markdown files:
+To register the `@conductor` agent, copy the agent definition to your global OpenCode agent directory:
+
+```bash
+mkdir -p ~/.config/opencode/agent
+cp src/prompts/agent/conductor.md ~/.config/opencode/agent/
+```
+
+### Configure the Agent Model (Optional but Recommended)
+By default, the agent will use your session's default model. We recommend pinning it to a "flash" model for speed.
+
+**In `~/.config/opencode/opencode.json`:**
+```json
+{
+  "agent": {
+    "conductor": {
+      "model": "google/gemini-3-flash"
+    }
+  }
+}
+```
+
+## 5. Install Slash Commands (Recommended)
+
+To make the Conductor workflows easily accessible via `/` commands in the OpenCode TUI, install the command definitions:
 
 ```bash
 mkdir -p ~/.config/opencode/command
 cp src/prompts/commands/*.md ~/.config/opencode/command/
 ```
 
-*Note: If the `src/prompts/commands` directory doesn't exist in your version, you can manually create the files as described in the "Manual Command Creation" section below.*
+## 6. Verify Installation
 
-## 5. Verify Installation
-
-Restart your OpenCode session. You should see a toast notification saying "Conductor: Plugin initialized".
+Restart your OpenCode session. You should see a toast notification saying "Conductor initialized".
 
 Try the following to verify:
+*   Type `@` to see if `conductor` appears in the agent list.
 *   Type `/` to see the `c-` prefixed commands.
 *   Run `/c-setup` to start the project initialization.
 
 ---
 
-## Manual Command Creation
+## Manual File Creation (If needed)
 
-If you prefer to create the slash commands manually, create the following files in `~/.config/opencode/command/`:
+If you cannot copy the files from the source, create them manually in `~/.config/opencode/`:
 
-### `c-setup.md`
+### `agent/conductor.md`
+```markdown
+---
+description: Spec-Driven Development Architect. Manages the project lifecycle using the Conductor protocol.
+mode: subagent
+tools:
+  conductor_setup: true
+  conductor_new_track: true
+  conductor_implement: true
+  conductor_status: true
+  conductor_revert: true
+---
+[Insert contents of src/prompts/agent.md here]
+```
+
+### `command/c-setup.md`
 ```markdown
 ---
 description: Setup or resume Conductor environment
+agent: conductor
 ---
 Invoke the conductor_setup tool to start or resume the project initialization. Do NOT create todos during this phase.
-```
-
-### `c-new.md`
-```markdown
----
-description: Create a new track (feature/bug)
----
-Invoke the conductor_new_track tool with description: "$ARGUMENTS". Do NOT create todos during this phase.
-```
-
-### `c-implement.md`
-```markdown
----
-description: Implement the next pending task
----
-Invoke the conductor_implement tool. If a track name is provided ("$ARGUMENTS"), use it; otherwise, implement the next available track.
-```
-
-### `c-status.md`
-```markdown
----
-description: Show Conductor project status
----
-Invoke the conductor_status tool to summarize the project progress.
-```
-
-### `c-revert.md`
-```markdown
----
-description: Revert a track, phase, or task
----
-Invoke the conductor_revert tool for: "$ARGUMENTS"
 ```
