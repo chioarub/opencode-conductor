@@ -13,13 +13,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const ConductorPlugin: Plugin = async (ctx) => {
+  console.log("[Conductor] Plugin loading...");
+
   return {
     config: async (config) => {
-      const isOMOActive = config.plugin?.some(p => p.includes("oh-my-opencode"));
+      console.log("[Conductor] config hook triggered");
+      
+      const plugins = config.plugin || [];
+      const isOMOActive = plugins.some(p => typeof p === "string" && p.includes("oh-my-opencode"));
+      
       let agentPrompt = "";
       try {
-        agentPrompt = await readFile(join(__dirname, "prompts/agent.md"), "utf-8");
+        const promptPath = join(__dirname, "prompts/agent.md");
+        agentPrompt = await readFile(promptPath, "utf-8");
       } catch (e) {
+        console.error("[Conductor] Failed to read agent prompt from:", join(__dirname, "prompts/agent.md"));
         agentPrompt = "Specialized agent for Conductor spec-driven development.";
       }
 
@@ -30,25 +38,31 @@ const ConductorPlugin: Plugin = async (ctx) => {
           variant: "success",
           duration: 3000
         }
-      }).catch(() => {});
+      }).catch((e) => {
+        console.error("[Conductor] Toast failed:", e);
+      });
 
-      // Register the Conductor Agent if OMO is active or if we just want it available
-      config.agent = {
-        ...config.agent,
-        "conductor": {
-          description: "Spec-Driven Development Architect. Manages the project lifecycle using the Conductor protocol.",
-          model: "google/gemini-3-flash",
-          prompt: agentPrompt,
-          tools: {
-            conductor_setup: true,
-            conductor_new_track: true,
-            conductor_implement: true,
-            conductor_status: true,
-            conductor_revert: true
-          }
+      // Register the Conductor Agent logic. 
+      // User can override the model in their global opencode.json or oh-my-opencode.json
+      config.agent = config.agent || {};
+      const existingConductor = config.agent["conductor"] || {};
+
+      config.agent["conductor"] = {
+        description: "Spec-Driven Development Architect. Manages the project lifecycle using the Conductor protocol.",
+        model: existingConductor.model || config.model,
+        prompt: agentPrompt,
+        ...existingConductor,
+        tools: {
+          ...existingConductor.tools,
+          conductor_setup: true,
+          conductor_new_track: true,
+          conductor_implement: true,
+          conductor_status: true,
+          conductor_revert: true
         }
       };
 
+      config.command = config.command || {};
       config.command = {
         ...config.command,
         "c-setup": {
@@ -77,6 +91,8 @@ const ConductorPlugin: Plugin = async (ctx) => {
           template: "Invoke the conductor_revert tool for: $ARGUMENTS"
         }
       };
+      
+      console.log("[Conductor] config hook completed");
     },
     tool: {
       conductor_setup: setupCommand(ctx),
