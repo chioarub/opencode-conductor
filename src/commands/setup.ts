@@ -1,6 +1,11 @@
 import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool";
 import { StateManager } from "../utils/stateManager.js";
 import { loadPrompt } from "../utils/promptLoader.js";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const setupCommand = (ctx: any): ToolDefinition =>
   tool({
@@ -10,10 +15,10 @@ export const setupCommand = (ctx: any): ToolDefinition =>
     },
     async execute(args: { user_input?: string }) {
       const stateManager = new StateManager(ctx.directory);
-      // Ensure the setup state is tracked, but for the prompt, we use the original system directive.
-      // The original setup.toml prompt handles the logic flow via the LLM following instructions.
-      // We pass the current state implicitly by letting the LLM read the state file as per instructions.
       
-      return await loadPrompt("setup.toml");
+      // Resolve the absolute path to the templates directory in the distribution
+      const templatesDir = join(__dirname, "../templates");
+      
+      return await loadPrompt("setup.toml", { templatesDir });
     },
   });
