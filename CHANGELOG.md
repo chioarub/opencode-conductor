@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/derekbar90/opencode-conductor/compare/v1.1.3...v1.2.0) (2025-12-30)
+
+
+### Features
+
+* promote conductor to primary agent and add oh-my-opencode synergy delegation ([0454552](https://github.com/derekbar90/opencode-conductor/commit/0454552672f65abdcc02cfb9f1659bb789065b62))
+
 ## [1.1.3](https://github.com/derekbar90/opencode-conductor/compare/v1.1.2...v1.1.3) (2025-12-30)
 
 
