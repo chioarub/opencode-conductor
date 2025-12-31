@@ -94,7 +94,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
              injection += "```markdown\n" + workflowMd + "\n```\n";
           }
 
-          injection += "\n### 3. YOUR MANDATE (LEAD ENGINEER)\n";
+          injection += "\n### 3. DELEGATED AUTHORITY\n";
           injection += "- **EXECUTE:** Implement the requested task using the Workflow.\n";
           injection += "- **REFINE:** You have authority to update `plan.md` if it is flawed.\n";
           injection += "- **ESCALATE:** If you modify the Plan or Spec, report 'PLAN_UPDATED' immediately.\n";
