@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/derekbar90/opencode-conductor/compare/v1.7.0...v1.8.0) (2025-12-31)
+
+
+### Features
+
+* **synergy:** implement automatic context injection for sisyphus delegation ([dbe9abf](https://github.com/derekbar90/opencode-conductor/commit/dbe9abfd9e17bfeb2e83373bf91d749a55aef166))
+
 # [1.7.0](https://github.com/derekbar90/opencode-conductor/compare/v1.6.0...v1.7.0) (2025-12-31)
 
 
