@@ -15,8 +15,21 @@ export const implementCommand = (ctx: any): ToolDefinition =>
            return "Conductor is not set up. Please run `conductor_setup`.";
        }
 
+       // Load the appropriate strategy snippet
+       const strategyFile = ctx.isOMOActive ? "delegate.md" : "manual.md";
+       const strategyPath = join(__dirname, "../prompts/strategies", strategyFile);
+       let strategySection = "";
+       
+       try {
+         strategySection = await readFile(strategyPath, "utf-8");
+       } catch (e) {
+         console.warn(`[Conductor] Failed to load strategy ${strategyFile}:`, e);
+         strategySection = "Error: Could not load execution strategy.";
+       }
+
        return await loadPrompt("implement.toml", {
-         isOMOActive: ctx.isOMOActive ? "true" : "false"
+         isOMOActive: ctx.isOMOActive ? "true" : "false",
+         strategy_section: strategySection
        });
     },
   });
