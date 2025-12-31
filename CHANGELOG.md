@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/derekbar90/opencode-conductor/compare/v1.3.0...v1.3.1) (2025-12-31)
+
+
+### Bug Fixes
+
+* revert to stable v1.3.0 baseline ([010f993](https://github.com/derekbar90/opencode-conductor/commit/010f99357b40861b04e930eb256479a6298d6bfa))
+
 # [1.3.0](https://github.com/derekbar90/opencode-conductor/compare/v1.2.1...v1.3.0) (2025-12-30)
 
 
