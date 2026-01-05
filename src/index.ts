@@ -126,13 +126,6 @@ const ConductorPlugin: Plugin = async (ctx) => {
 
             const workflowMd = await safeRead(join(conductorDir, "workflow.md"));
             
-            // Try to find track-specific plan.md if possible
-            let trackPlanMd = null;
-            const trackIdMatch = output.args.objective.match(/tracks\/([^\/]+)\/plan\.md/);
-            if (trackIdMatch) {
-              trackPlanMd = await safeRead(join(conductorDir, "tracks", trackIdMatch[1], "plan.md"));
-            }
-
             let injection = "\n\n--- [SYSTEM INJECTION: CONDUCTOR CONTEXT PACKET] ---\n";
             injection += "You are receiving this task from the Conductor Architect.\n";
             
@@ -140,8 +133,8 @@ const ConductorPlugin: Plugin = async (ctx) => {
                injection += "\n### DEVELOPMENT WORKFLOW\n" + workflowMd + "\n";
             }
             
-            if (trackPlanMd) {
-               injection += "\n### IMPLEMENTATION PLAN\n" + trackPlanMd + "\n";
+            if (implement?.prompt) {
+               injection += "\n### IMPLEMENTATION PROTOCOL\n" + implement.prompt + "\n";
             }
 
             injection += "\n### DELEGATED AUTHORITY\n- **EXECUTE:** Implement the requested task.\n- **REFINE:** You have authority to update `plan.md`.\n";
