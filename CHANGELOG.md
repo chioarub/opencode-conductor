@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/derekbar90/opencode-conductor/compare/v1.10.0...v1.11.0) (2026-01-05)
+
+
+### Features
+
+* implement config injection architecture for commands and agents ([6c32887](https://github.com/derekbar90/opencode-conductor/commit/6c32887f874642d6ebffeaf536201c586a117e8a))
+
 # [1.10.0](https://github.com/derekbar90/opencode-conductor/compare/v1.9.0...v1.10.0) (2026-01-05)
 
 
