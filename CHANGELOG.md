@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/derekbar90/opencode-conductor/compare/v1.12.0...v1.13.0) (2026-01-05)
+
+
+### Features
+
+* remove forced agent selection from implement command ([4605ab5](https://github.com/derekbar90/opencode-conductor/commit/4605ab58ff6d5b86f199818902b32ec2472d465a))
+
 # [1.12.0](https://github.com/derekbar90/opencode-conductor/compare/v1.11.0...v1.12.0) (2026-01-05)
 
 
