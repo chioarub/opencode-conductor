@@ -61,7 +61,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
     // 3. Load Strategies
     let strategySection = "";
     try {
-      const strategyFile = isOMOActive ? "delegate.md" : "manual.md";
+      const strategyFile = "manual.md"; // Force manual strategy for now
       const strategyPath = join(__dirname, "prompts", "strategies", strategyFile);
       strategySection = await readFile(strategyPath, "utf-8");
     } catch (e) {
