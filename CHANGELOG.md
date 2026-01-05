@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/derekbar90/opencode-conductor/compare/v1.11.0...v1.12.0) (2026-01-05)
+
+
+### Features
+
+* optimize implementation delegation and enable subtask mode ([bf7f949](https://github.com/derekbar90/opencode-conductor/commit/bf7f949f3644da3f149a130c29bd880eb9b8da7d))
+
 # [1.11.0](https://github.com/derekbar90/opencode-conductor/compare/v1.10.0...v1.11.0) (2026-01-05)
 
 
