@@ -100,8 +100,8 @@ const ConductorPlugin: Plugin = async (ctx) => {
           "conductor:setup": { template: setup.prompt, description: setup.description, agent: "conductor" },
           "conductor:newTrack": { template: newTrack.prompt, description: newTrack.description, agent: "conductor" },
           "conductor:implement": { template: implement.prompt, description: implement.description },
-          "conductor:status": { template: status.prompt, description: status.description, agent: "conductor", subtask: true },
-          "conductor:revert": { template: revert.prompt, description: revert.description, agent: "conductor", subtask: true }
+          "conductor:status": { template: status.prompt, description: status.description, agent: "conductor" },
+          "conductor:revert": { template: revert.prompt, description: revert.description, agent: "conductor" }
         };
 
         config.agent = {
