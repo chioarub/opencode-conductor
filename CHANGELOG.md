@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/derekbar90/opencode-conductor/compare/v1.13.0...v1.14.0) (2026-01-05)
+
+
+### Features
+
+* disable subtask mode for interactive Conductor commands ([65aa19d](https://github.com/derekbar90/opencode-conductor/commit/65aa19d2388661bd966e9c3c7f17485ceea0bd8a))
+
 # [1.13.0](https://github.com/derekbar90/opencode-conductor/compare/v1.12.0...v1.13.0) (2026-01-05)
 
 
