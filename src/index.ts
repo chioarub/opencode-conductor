@@ -8,6 +8,12 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const safeRead = async (path: string) => {
+  try {
+    if (existsSync(path)) return await readFile(path, "utf-8");
+  } catch (e) {}
+  return null;
+};
 
 const ConductorPlugin: Plugin = async (ctx) => {
   try {
@@ -20,17 +26,30 @@ const ConductorPlugin: Plugin = async (ctx) => {
     try {
       if (existsSync(configPath)) {
         const config = JSON.parse(readFileSync(configPath, "utf-8"));
-        isOMOActive = config.plugin?.some((p: string) => p.includes("oh-my-opencode"));
+        isOMOActive = config.plugin?.some((p: string) =>
+          p.includes("oh-my-opencode"),
+        );
       }
     } catch (e) {
-      const omoPath = join(homedir(), ".config", "opencode", "node_modules", "oh-my-opencode");
+      const omoPath = join(
+        homedir(),
+        ".config",
+        "opencode",
+        "node_modules",
+        "oh-my-opencode",
+      );
       isOMOActive = existsSync(omoPath);
     }
 
-    console.log(`[Conductor] Plugin environment detected. (OMO Synergy: ${isOMOActive ? "Enabled" : "Disabled"})`);
+    console.log(
+      `[Conductor] Plugin environment detected. (OMO Synergy: ${isOMOActive ? "Enabled" : "Disabled"})`,
+    );
 
     // 2. Helper to load and process prompt templates (Manual TOML Parsing)
-    const loadPrompt = async (filename: string, replacements: Record<string, string> = {}) => {
+    const loadPrompt = async (
+      filename: string,
+      replacements: Record<string, string> = {},
+    ) => {
       const promptPath = join(__dirname, "prompts", filename);
       try {
         const content = await readFile(promptPath, "utf-8");
@@ -39,11 +58,12 @@ const ConductorPlugin: Plugin = async (ctx) => {
         const promptMatch = content.match(/prompt\s*=\s*"""([\s\S]*?)"""/);
         let promptText = promptMatch ? promptMatch[1] : "";
 
-        if (!promptText) throw new Error(`Could not parse prompt text from ${filename}`);
-        
+        if (!promptText)
+          throw new Error(`Could not parse prompt text from ${filename}`);
+
         const defaults = {
           isOMOActive: isOMOActive ? "true" : "false",
-          templatesDir: join(dirname(__dirname), "templates")
+          templatesDir: join(dirname(__dirname), "templates"),
         };
 
         const finalReplacements = { ...defaults, ...replacements };
@@ -54,7 +74,10 @@ const ConductorPlugin: Plugin = async (ctx) => {
         return { prompt: promptText, description: description };
       } catch (error) {
         console.error(`[Conductor] Error loading prompt ${filename}:`, error);
-        return { prompt: `SYSTEM ERROR: Failed to load prompt ${filename}`, description: "Error loading command" };
+        return {
+          prompt: `SYSTEM ERROR: Failed to load prompt ${filename}`,
+          description: "Error loading command",
+        };
       }
     };
 
@@ -62,90 +85,137 @@ const ConductorPlugin: Plugin = async (ctx) => {
     let strategySection = "";
     try {
       const strategyFile = "manual.md"; // Force manual strategy for now
-      const strategyPath = join(__dirname, "prompts", "strategies", strategyFile);
+      const strategyPath = join(
+        __dirname,
+        "prompts",
+        "strategies",
+        strategyFile,
+      );
       strategySection = await readFile(strategyPath, "utf-8");
     } catch (e) {
       strategySection = "SYSTEM ERROR: Could not load execution strategy.";
     }
 
     // 4. Load all Command Prompts (Parallel)
-    const [setup, newTrack, implement, status, revert] = await Promise.all([
-      loadPrompt("setup.toml"),
-      loadPrompt("newTrack.toml", { args: "$ARGUMENTS" }),
-      loadPrompt("implement.toml", { track_name: "$ARGUMENTS", strategy_section: strategySection }),
-      loadPrompt("status.toml"),
-      loadPrompt("revert.toml", { target: "$ARGUMENTS" })
-    ]);
+    const [setup, newTrack, implement, status, revert, workflowMd] =
+      await Promise.all([
+        loadPrompt("setup.toml"),
+        loadPrompt("newTrack.toml", { args: "$ARGUMENTS" }),
+        loadPrompt("implement.toml", {
+          track_name: "$ARGUMENTS",
+          strategy_section: strategySection,
+        }),
+        loadPrompt("status.toml"),
+        loadPrompt("revert.toml", { target: "$ARGUMENTS" }),
+        safeRead(join(ctx.directory, "conductor", "workflow.md")),
+      ]);
 
     // 5. Extract Agent Prompt
-    const agentMd = await readFile(join(__dirname, "prompts", "agent", "conductor.md"), "utf-8");
+    const agentMd = await readFile(
+      join(__dirname, "prompts", "agent", "conductor.md"),
+      "utf-8",
+    );
     const agentPrompt = agentMd.split("---").pop()?.trim() || "";
 
     console.log("[Conductor] All components ready. Injecting config...");
 
     return {
       config: async (config: Parameters<NonNullable<Hooks["config"]>>[0]) => {
-        console.log("[Conductor] config handler: Merging commands and agent...");
-        
+        console.log(
+          "[Conductor] config handler: Merging commands and agent...",
+        );
+
         config.command = {
           ...(config.command || {}),
-          "conductor:setup": { template: setup.prompt, description: setup.description, agent: "conductor" },
-          "conductor:newTrack": { template: newTrack.prompt, description: newTrack.description, agent: "conductor" },
-          "conductor:implement": { template: implement.prompt, description: implement.description },
-          "conductor:status": { template: status.prompt, description: status.description, agent: "conductor" },
-          "conductor:revert": { template: revert.prompt, description: revert.description, agent: "conductor" }
+          "conductor:setup": {
+            template: setup.prompt,
+            description: setup.description,
+            agent: "conductor",
+          },
+          "conductor:newTrack": {
+            template: newTrack.prompt,
+            description: newTrack.description,
+            agent: "conductor",
+          },
+          "conductor:implement": {
+            template: implement.prompt,
+            description: implement.description,
+          },
+          "conductor:status": {
+            template: status.prompt,
+            description: status.description,
+            agent: "conductor",
+          },
+          "conductor:revert": {
+            template: revert.prompt,
+            description: revert.description,
+            agent: "conductor",
+          },
         };
 
         config.agent = {
           ...(config.agent || {}),
-          "conductor": {
+          conductor: {
             description: "Spec-Driven Development Architect.",
             mode: "primary",
-            prompt: agentPrompt,
+            prompt: agentPrompt + workflowMd,
             permission: {
               edit: "allow",
               bash: "allow",
               webfetch: "allow",
               doom_loop: "allow",
-              external_directory: "deny"
-            }
-          }
+              external_directory: "deny",
+            },
+          },
         };
       },
 
       "tool.execute.before": async (
         input: Parameters<NonNullable<Hooks["tool.execute.before"]>>[0],
-        output: Parameters<NonNullable<Hooks["tool.execute.before"]>>[1]
+        output: Parameters<NonNullable<Hooks["tool.execute.before"]>>[1],
       ) => {
-        if (input.tool === "delegate_to_agent") {
-          const agentName = (output.args.agent_name || output.args.agent || "");
-          // Sisyphus must be capital S
-          if (agentName.includes("Sisyphus")) {
-            const conductorDir = join(ctx.directory, "conductor");
-            const safeRead = async (path: string) => {
-               try { if (existsSync(path)) return await readFile(path, "utf-8"); } catch (e) {}
-               return null;
-            };
+        const delegationTools = [
+          "delegate_to_agent",
+          "task",
+          "background_task",
+          "call_omo_agent",
+        ];
 
-            const workflowMd = await safeRead(join(conductorDir, "workflow.md"));
-            
-            let injection = "\n\n--- [SYSTEM INJECTION: CONDUCTOR CONTEXT PACKET] ---\n";
-            injection += "You are receiving this task from the Conductor Architect.\n";
-            
-            if (workflowMd) {
-               injection += "\n### DEVELOPMENT WORKFLOW\n" + workflowMd + "\n";
-            }
-            
+        if (delegationTools.includes(input.tool)) {
+          const conductorDir = join(ctx.directory, "conductor");
+
+          const workflowMd = await safeRead(join(conductorDir, "workflow.md"));
+
+          if (workflowMd) {
+            let injection =
+              "\n\n--- [SYSTEM INJECTION: CONDUCTOR CONTEXT PACKET] ---\n";
+            injection +=
+              "You are receiving this task from the Conductor Architect.\n";
+            injection +=
+              "You MUST adhere to the following project workflow rules:\n";
+
+            injection += "\n### DEVELOPMENT WORKFLOW\n" + workflowMd + "\n";
+
             if (implement?.prompt) {
-               injection += "\n### IMPLEMENTATION PROTOCOL\n" + implement.prompt + "\n";
+              injection +=
+                "\n### IMPLEMENTATION PROTOCOL\n" + implement.prompt + "\n";
             }
 
-            injection += "\n### DELEGATED AUTHORITY\n- **EXECUTE:** Implement the requested task.\n- **REFINE:** You have authority to update `plan.md`.\n";
+            injection +=
+              "\n### DELEGATED AUTHORITY\n- **EXECUTE:** Implement the requested task.\n- **REFINE:** You have authority to update `plan.md`.\n";
             injection += "--- [END INJECTION] ---\n";
-            output.args.objective += injection;
+
+            // Inject into the primary instruction field depending on the tool's schema
+            if (typeof output.args.objective === "string") {
+              output.args.objective += injection;
+            } else if (typeof output.args.prompt === "string") {
+              output.args.prompt += injection;
+            } else if (typeof output.args.instruction === "string") {
+              output.args.instruction += injection;
+            }
           }
         }
-      }
+      },
     };
   } catch (err) {
     console.error("[Conductor] FATAL: Plugin initialization failed:", err);
