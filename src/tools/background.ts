@@ -94,8 +94,8 @@ export class BackgroundManager {
       body: {
         agent: input.agent,
         tools: {
-          "conductor:background_task": false,
-          "conductor:delegate": false,
+          "conductor_background_task": false,
+          "conductor_delegate": false,
         },
         parts: [{ type: "text", text: input.prompt }],
       },
@@ -156,7 +156,7 @@ export class BackgroundManager {
   }
 
   private async notifyParentSession(task: BackgroundTask) {
-    const message = `[BACKGROUND TASK COMPLETED] Task "${task.description}" finished. Use conductor:background_output with task_id="${task.id}" to get results.`
+    const message = `[BACKGROUND TASK COMPLETED] Task "${task.description}" finished. Use conductor_background_output with task_id="${task.id}" to get results.`
     
     await this.client.session.prompt({
       path: { id: task.parentSessionID },

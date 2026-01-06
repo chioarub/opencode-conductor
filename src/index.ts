@@ -105,11 +105,11 @@ const ConductorPlugin: Plugin = async (ctx) => {
 
     return {
       tool: {
-        "conductor:delegate": createDelegationTool(ctx),
-        "conductor:background_task": createBackgroundTask(backgroundManager),
-        "conductor:background_output":
+        "conductor_delegate": createDelegationTool(ctx),
+        "conductor_background_task": createBackgroundTask(backgroundManager),
+        "conductor_background_output":
           createBackgroundOutput(backgroundManager),
-        "conductor:background_cancel":
+        "conductor_background_cancel":
           createBackgroundCancel(backgroundManager),
       },
       config: async (config) => {
@@ -120,27 +120,27 @@ const ConductorPlugin: Plugin = async (ctx) => {
 
         config.command = {
           ...(config.command || {}),
-          "conductor:setup": {
+          "conductor_setup": {
             template: setup.prompt,
             description: setup.description,
             agent: "conductor",
           },
-          "conductor:newTrack": {
+          "conductor_newTrack": {
             template: newTrack.prompt,
             description: newTrack.description,
             agent: "conductor",
           },
-          "conductor:implement": {
+          "conductor_implement": {
             template: implement.prompt,
             description: implement.description,
             agent: "conductor_implementer",
           },
-          "conductor:status": {
+          "conductor_status": {
             template: status.prompt,
             description: status.description,
             agent: "conductor",
           },
-          "conductor:revert": {
+          "conductor_revert": {
             template: revert.prompt,
             description: revert.description,
             agent: "conductor",
@@ -203,10 +203,10 @@ const ConductorPlugin: Plugin = async (ctx) => {
               todowrite: true,
               todoread: true,
               webfetch: true,
-              "conductor:delegate": true,
-              "conductor:background_task": true,
-              "conductor:background_output": true,
-              "conductor:background_cancel": true,
+              "conductor_delegate": true,
+              "conductor_background_task": true,
+              "conductor_background_output": true,
+              "conductor_background_cancel": true,
             },
           },
         };
@@ -217,8 +217,8 @@ const ConductorPlugin: Plugin = async (ctx) => {
           "delegate_to_agent",
           "task",
           "background_task",
-          "conductor:delegate",
-          "conductor:background_task",
+          "conductor_delegate",
+          "conductor_background_task",
         ];
 
         if (delegationTools.includes(input.tool)) {

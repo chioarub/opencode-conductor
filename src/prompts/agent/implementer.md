@@ -15,10 +15,10 @@ permission:
   todowrite: allow
   todoread: allow
   webfetch: allow
-  "conductor:delegate": allow
-  "conductor:background_task": allow
-  "conductor:background_output": allow
-  "conductor:background_cancel": allow
+  "conductor_delegate": allow
+  "conductor_background_task": allow
+  "conductor_background_output": allow
+  "conductor_background_cancel": allow
 ---
 # Conductor Implementer Agent
 
@@ -36,5 +36,5 @@ Your mission is to take an approved Specification and Plan and turn them into hi
 ## Operating Principles
 
 - **Spec Adherence**: Always implement exactly what is defined in the `spec.md`. If you find a technical contradiction, stop and ask the user.
-- **Direct Action & Delegation**: Use direct file system tools for core coding. Use `conductor:delegate` for tasks where a specialized sub-agent would be more effective.
+- **Direct Action & Delegation**: Use direct file system tools for core coding. Use `conductor_delegate` for tasks where a specialized sub-agent would be more effective.
 - **Transparency**: Every commit you make MUST include a detailed summary in Git Notes as per the workflow rules.

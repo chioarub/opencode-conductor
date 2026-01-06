@@ -28,7 +28,7 @@ export function createDelegationTool(ctx: PluginInput): ToolDefinition {
         body: {
           agent: args.subagent_type,
           tools: {
-            "conductor:delegate": false, // Disable this tool for the child session
+            "conductor_delegate": false, // Disable this tool for the child session
           },
           parts: [{ type: "text", text: args.prompt }],
         },

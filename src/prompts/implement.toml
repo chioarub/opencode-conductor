@@ -19,7 +19,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 
 2.  **Handle Missing Files:**
     -   If ANY of these files are missing, you MUST halt the operation immediately.
-    -   Announce: "Conductor is not set up. Please run `/conductor:setup` to set up the environment."
+    -   Announce: "Conductor is not set up. Please run `/conductor_setup` to set up the environment."
     -   Do NOT proceed to Track Selection.
 
 ---
@@ -27,7 +27,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 ## 2.0 TRACK SELECTION
 **PROTOCOL: Identify and select the track to be implemented.**
 
-1.  **Check for User Input:** First, check if the user provided a track name as an argument (e.g., `/conductor:implement <track_description>`).
+1.  **Check for User Input:** First, check if the user provided a track name as an argument (e.g., `/conductor_implement <track_description>`).
 
 2.  **Parse Tracks File:** Use the `read` tool to read and parse the tracks file at `conductor/tracks.md`. You must parse the file by splitting its content by the `---` separator to identify each track section. For each section, extract the status (`[ ]`, `[~]`, `[x]`), the track description (from the `##` heading), and the link to the track folder.
     -   **CRITICAL:** If no track sections are found after parsing, announce: "The tracks file is empty or malformed. No tracks to implement." and halt.
