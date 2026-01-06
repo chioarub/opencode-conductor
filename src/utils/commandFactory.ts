@@ -1,0 +1,72 @@
+import { type PluginInput } from "@opencode-ai/plugin"
+import { tool, type ToolDefinition } from "@opencode-ai/plugin/tool"
+import { join, dirname } from "path"
+import { readFile } from "fs/promises"
+import { fileURLToPath } from "url"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+interface ConductorCommandConfig {
+  name: string
+  description: string
+  args: Record<string, any>
+  additionalContext?: (ctx: PluginInput, args: any) => Promise<Record<string, string>>
+}
+
+// Helper to load and process prompt templates
+async function loadPrompt(
+  filename: string,
+  replacements: Record<string, string> = {},
+) {
+  const promptPath = join(__dirname, "..", "prompts", filename)
+  try {
+    const content = await readFile(promptPath, "utf-8")
+    const descMatch = content.match(/description\s*=\s*"([^"]+)"/)
+    const description = descMatch ? descMatch[1] : "Conductor Command"
+    const promptMatch = content.match(/prompt\s*=\s*"""([\s\S]*?)"""/)
+    let promptText = promptMatch ? promptMatch[1] : ""
+
+    if (!promptText)
+      throw new Error(`Could not parse prompt text from ${filename}`)
+
+    const defaults = {
+      templatesDir: join(dirname(dirname(__dirname)), "templates"),
+    }
+
+    const finalReplacements = { ...defaults, ...replacements }
+    for (const [key, value] of Object.entries(finalReplacements)) {
+      promptText = promptText.replaceAll(`{{${key}}}`, value || "")
+    }
+
+    return { prompt: promptText, description: description }
+  } catch (error) {
+    console.error(`[Conductor] Error loading prompt ${filename}:`, error)
+    return {
+      prompt: `SYSTEM ERROR: Failed to load prompt ${filename}`,
+      description: "Error loading command",
+    }
+  }
+}
+
+export function createConductorCommand(config: ConductorCommandConfig) {
+  return (ctx: PluginInput): ToolDefinition => {
+    return tool({
+      description: config.description,
+      args: config.args,
+      async execute(args: any) {
+        // Get additional context if provided (this can override/extend args)
+        const additionalContext = config.additionalContext
+          ? await config.additionalContext(ctx, args)
+          : {}
+
+        // Merge additionalContext into replacements
+        // additionalContext takes precedence and can provide custom mappings
+        const replacements: Record<string, string> = { ...additionalContext }
+
+        const { prompt } = await loadPrompt(config.name, replacements)
+        return prompt
+      },
+    })
+  }
+}
