@@ -105,6 +105,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
 
     return {
       tool: {
+        ...(ctx.client.tool || {}),
         "conductor_delegate": createDelegationTool(ctx),
         "conductor_bg_task": createBackgroundTask(backgroundManager),
         "conductor_bg_output": createBackgroundOutput(backgroundManager),
@@ -156,6 +157,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
               edit: "allow",
               webfetch: "allow",
               external_directory: "deny",
+              list: "allow"
             },
             tools: {
               bash: true,
