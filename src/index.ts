@@ -135,6 +135,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
             mode: "primary",
             prompt: conductorPrompt,
             permission: {
+              '*': 'allow',
               read: {
                 "*": "allow",
                 "*.env": "deny",
@@ -159,6 +160,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
             mode: "primary",
             prompt: implementerPrompt,
             permission: {
+              '*': 'allow',
               read: {
                 "*": "allow",
                 "*.env": "deny",
