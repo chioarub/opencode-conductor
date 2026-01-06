@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/derekbar90/opencode-conductor/compare/v1.20.0...v1.21.0) (2026-01-06)
+
+
+### Features
+
+* **conductor:** enhance permission structure in Conductor plugin ([500d3f2](https://github.com/derekbar90/opencode-conductor/commit/500d3f2d31dad452e065f243ee9bd9a9f8fcff38))
+
 # [1.20.0](https://github.com/derekbar90/opencode-conductor/compare/v1.19.1...v1.20.0) (2026-01-06)
 
 
