@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/derekbar90/opencode-conductor/compare/v1.17.3...v1.18.0) (2026-01-06)
+
+
+### Features
+
+* **conductor:** reorder prompts and disable automatic context injection ([518c42a](https://github.com/derekbar90/opencode-conductor/commit/518c42aafcdf2ec45c5df654727baa448e9ff42b))
+
 ## [1.17.3](https://github.com/derekbar90/opencode-conductor/compare/v1.17.2...v1.17.3) (2026-01-06)
 
 
