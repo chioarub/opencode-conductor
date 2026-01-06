@@ -20,9 +20,34 @@ async function loadPrompt(
   filename: string,
   replacements: Record<string, string> = {},
 ) {
-  const promptPath = join(__dirname, "..", "prompts", filename)
+  // Try src/prompts first, then relative to project root
+  const pathsToTry = [
+    join(__dirname, "..", "prompts", filename),
+    join(__dirname, "..", "..", filename)
+  ]
+
+  let content = ""
+  let successPath = ""
+
+  for (const p of pathsToTry) {
+    try {
+      content = await readFile(p, "utf-8")
+      successPath = p
+      break
+    } catch (e) {
+      continue
+    }
+  }
+
+  if (!content) {
+    console.error(`[Conductor] Error loading prompt ${filename}: Not found in any tried paths`)
+    return {
+      prompt: `SYSTEM ERROR: Failed to load prompt ${filename}`,
+      description: "Error loading command",
+    }
+  }
+
   try {
-    const content = await readFile(promptPath, "utf-8")
     const descMatch = content.match(/description\s*=\s*"([^"]+)"/)
     const description = descMatch ? descMatch[1] : "Conductor Command"
     const promptMatch = content.match(/prompt\s*=\s*"""([\s\S]*?)"""/)
@@ -42,10 +67,10 @@ async function loadPrompt(
 
     return { prompt: promptText, description: description }
   } catch (error) {
-    console.error(`[Conductor] Error loading prompt ${filename}:`, error)
+    console.error(`[Conductor] Error parsing prompt ${filename}:`, error)
     return {
-      prompt: `SYSTEM ERROR: Failed to load prompt ${filename}`,
-      description: "Error loading command",
+      prompt: `SYSTEM ERROR: Failed to parse prompt ${filename}`,
+      description: "Error parsing command",
     }
   }
 }

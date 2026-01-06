@@ -35,12 +35,12 @@ const ConductorPlugin: Plugin = async (ctx) => {
   const extendedCtx = { ...ctx, isOMOActive };
 
   return {
-    tool: {
-      conductor_setup: setupCommand(extendedCtx),
-      conductor_new_track: newTrackCommand(extendedCtx),
-      conductor_implement: implementCommand(extendedCtx),
-      conductor_status: statusCommand(extendedCtx),
-      conductor_revert: revertCommand(extendedCtx),
+    commands: {
+      setup: setupCommand(extendedCtx),
+      newTrack: newTrackCommand(extendedCtx),
+      implement: implementCommand(extendedCtx),
+      status: statusCommand(extendedCtx),
+      revert: revertCommand(extendedCtx),
     },
     "tool.execute.before": async (input: any, output: any) => {
       // INTERCEPT: Sisyphus Delegation Hook
