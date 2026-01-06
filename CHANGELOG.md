@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/derekbar90/opencode-conductor/compare/v1.22.0...v1.22.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* **conductor:** update command templates to include follow-up instructions ([df6cd0a](https://github.com/derekbar90/opencode-conductor/commit/df6cd0a9e1a2c312c376d768cd1d59ecacc687a7))
+
 # [1.22.0](https://github.com/derekbar90/opencode-conductor/compare/v1.21.1...v1.22.0) (2026-01-06)
 
 
