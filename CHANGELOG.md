@@ -1,3 +1,16 @@
+# [1.26.0](https://github.com/derekbar90/opencode-conductor/compare/v1.25.0...v1.26.0) (2026-01-06)
+
+
+### Bug Fixes
+
+* resolve typescript errors in tool definitions and context access ([f27312a](https://github.com/derekbar90/opencode-conductor/commit/f27312a424f54fa5702e0da416930c0a7346cb07))
+* **tests:** align tests with implementation at commit 069c6cf ([36118b7](https://github.com/derekbar90/opencode-conductor/commit/36118b78f444dfa2ca55c8458ba1bf36a6dedf52))
+
+
+### Features
+
+* change tool return type to JSON string with directives and update descriptions ([21c3d4a](https://github.com/derekbar90/opencode-conductor/commit/21c3d4a273fc5168054f1ffbdf774d768a8bd205))
+
 # [1.25.0](https://github.com/derekbar90/opencode-conductor/compare/v1.24.0...v1.25.0) (2026-01-06)
 
 
