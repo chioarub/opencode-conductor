@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/derekbar90/opencode-conductor/compare/v1.19.0...v1.19.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* **conductor:** remove duplicate console log statement in plugin initialization ([ad629e2](https://github.com/derekbar90/opencode-conductor/commit/ad629e2a8ea88c3cbf6f5c19d2fc5cb248bfc7cd))
+
 # [1.19.0](https://github.com/derekbar90/opencode-conductor/compare/v1.18.0...v1.19.0) (2026-01-06)
 
 
