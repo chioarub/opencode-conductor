@@ -1,3 +1,11 @@
+# [1.24.0](https://github.com/derekbar90/opencode-conductor/compare/v1.23.0...v1.24.0) (2026-01-06)
+
+
+### Features
+
+* **conductor:** add type definitions for command tool functions ([069c6cf](https://github.com/derekbar90/opencode-conductor/commit/069c6cf1ff24acf95fccb24ff46896f4cbe06057))
+* **conductor:** refactor command tools and introduce command factory ([fd163c5](https://github.com/derekbar90/opencode-conductor/commit/fd163c56e743ad7eff166fa4a924f3ecb7d1c3d3))
+
 # [1.23.0](https://github.com/derekbar90/opencode-conductor/compare/v1.22.1...v1.23.0) (2026-01-06)
 
 
