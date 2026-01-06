@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/derekbar90/opencode-conductor/compare/v1.21.1...v1.22.0) (2026-01-06)
+
+
+### Features
+
+* **conductor:** add new command tools for project management ([1c64a98](https://github.com/derekbar90/opencode-conductor/commit/1c64a98401e41fd8662f448af3411e62b1e26a14))
+
 ## [1.21.1](https://github.com/derekbar90/opencode-conductor/compare/v1.21.0...v1.21.1) (2026-01-06)
 
 
