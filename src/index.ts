@@ -157,6 +157,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
               edit: "allow",
               webfetch: "allow",
               external_directory: "deny",
+              // @ts-ignore
               list: "allow"
             },
             tools: {
