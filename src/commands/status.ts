@@ -1,7 +1,7 @@
 import { createConductorCommand } from "../utils/commandFactory.js";
 
 export const statusCommand = createConductorCommand({
-  name: "status.toml",
-  description: "Shows the status of Conductor tracks.",
+  name: "definitions/status.toml",
+  description: "Displays the current Conductor status, active tracks, and project health.",
   args: {}
 });

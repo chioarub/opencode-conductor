@@ -75,7 +75,7 @@ const ConductorPlugin: Plugin = async (ctx) => {
           // However, to be robust, we will read the GLOBAL workflow and the IMPLEMENT prompt.
           // We will explicitly inject the IMPLEMENT PROMPT as requested.
           
-          const implementToml = await safeRead(join(promptsDir, "implement.toml"));
+          const implementToml = await safeRead(join(promptsDir, "definitions", "implement.toml"));
           const workflowMd = await safeRead(join(conductorDir, "workflow.md"));
           
           // Construct the injection block

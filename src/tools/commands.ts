@@ -8,13 +8,13 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 export const setupCommand = createConductorCommand({
-  name: "setup.toml",
+  name: "definitions/setup.toml",
   description: "Directives lookup tool for scaffolding the project and setting up the Conductor environment",
   args: {},
 })
 
 export const newTrackCommand = createConductorCommand({
-  name: "newTrack.toml",
+  name: "definitions/newTrack.toml",
   description: "Directives lookup tool for planning a track, generating track-specific spec documents and updating the tracks file",
   args: {
     description: tool.schema.string().optional().describe("Brief description of the track (feature, bug fix, chore, etc.)"),
@@ -27,7 +27,7 @@ export const newTrackCommand = createConductorCommand({
 })
 
 export const implementCommand = createConductorCommand({
-  name: "implement.toml",
+  name: "definitions/implement.toml",
   description: "Directives lookup tool for executing the tasks defined in the specified track's plan",
   args: {
     track_name: tool.schema.string().optional().describe("Name or description of the track to implement"),
@@ -53,13 +53,13 @@ export const implementCommand = createConductorCommand({
 })
 
 export const statusCommand = createConductorCommand({
-  name: "status.toml",
+  name: "definitions/status.toml",
   description: "Directives lookup tool for displaying the current progress of the project",
   args: {},
 })
 
 export const revertCommand = createConductorCommand({
-  name: "revert.toml",
+  name: "definitions/revert.toml",
   description: "Directives lookup tool for reverting previous work",
   args: {
     target: tool.schema.string().optional().describe("Target to revert (e.g., 'track <track_id>', 'phase <phase_name>', 'task <task_name>')"),

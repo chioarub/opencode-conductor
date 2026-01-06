@@ -2,8 +2,8 @@ import { tool } from "@opencode-ai/plugin/tool";
 import { createConductorCommand } from "../utils/commandFactory.js";
 
 export const newTrackCommand = createConductorCommand({
-  name: "newTrack.toml",
-  description: "Creates a new track (feature/bug) in the Conductor system. IMPORTANT: Do NOT create any todos using 'todowrite' or 'task' tools before or during this command, as it manages its own interactive state and will conflict with continuation enforcers.",
+  name: "definitions/newTrack.toml",
+  description: "Creates a new Development Track (feature/bug/chore) with proper scaffolding.",
   args: {
     description: tool.schema.string().optional().describe("Brief description of the track."),
   },
