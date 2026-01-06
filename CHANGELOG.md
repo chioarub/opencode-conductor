@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/derekbar90/opencode-conductor/compare/v1.17.0...v1.17.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* **plugin:** Align tool and command names with required alphanumeric pattern ([bd680fc](https://github.com/derekbar90/opencode-conductor/commit/bd680fcd61072676c55c732cb514d82a502d42a9))
+
 # [1.17.0](https://github.com/derekbar90/opencode-conductor/compare/v1.16.0...v1.17.0) (2026-01-06)
 
 
