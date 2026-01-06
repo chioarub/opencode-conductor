@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/derekbar90/opencode-conductor/compare/v1.17.1...v1.17.2) (2026-01-06)
+
+
+### Bug Fixes
+
+* **diag:** Temporarily remove todo tools to diagnose validation error ([2648bfc](https://github.com/derekbar90/opencode-conductor/commit/2648bfc8bf19fda847c227208968274a055bb804))
+
 ## [1.17.1](https://github.com/derekbar90/opencode-conductor/compare/v1.17.0...v1.17.1) (2026-01-06)
 
 
