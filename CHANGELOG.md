@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/derekbar90/opencode-conductor/compare/v1.21.0...v1.21.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* **conductor:** remove redundant 'list' permission from Conductor plugin ([44c04d9](https://github.com/derekbar90/opencode-conductor/commit/44c04d9d9d4017c8923bcd5b9e0fac67faa97288))
+
 # [1.21.0](https://github.com/derekbar90/opencode-conductor/compare/v1.20.0...v1.21.0) (2026-01-06)
 
 
