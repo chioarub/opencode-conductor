@@ -114,27 +114,27 @@ const ConductorPlugin: Plugin = async (ctx) => {
         config.command = {
           ...(config.command || {}),
           "conductor_setup": {
-            template: "Use the conductor_setup tool to scaffold the project and set up the Conductor environment.",
+            template: "Use the conductor_setup tool to scaffold the project and set up the Conductor environment. After calling the tool, you MUST follow all instructions provided in the tool's response exactly as specified.",
             description: setup.description,
             agent: "conductor",
           },
           "conductor_newTrack": {
-            template: "Use the conductor_newTrack tool to plan a track and generate track-specific spec documents. If arguments were provided with this command, pass them as the 'description' parameter to the tool.",
+            template: "Use the conductor_newTrack tool to plan a track and generate track-specific spec documents. If arguments were provided with this command, pass them as the 'description' parameter to the tool. After calling the tool, you MUST follow all instructions provided in the tool's response exactly as specified.",
             description: newTrack.description,
             agent: "conductor",
           },
           "conductor_implement": {
-            template: "Use the conductor_implement tool to execute the tasks defined in the specified track's plan. If a track name was provided as an argument with this command, pass it as the 'track_name' parameter to the tool.",
+            template: "Use the conductor_implement tool to execute the tasks defined in the specified track's plan. If a track name was provided as an argument with this command, pass it as the 'track_name' parameter to the tool. After calling the tool, you MUST follow all instructions provided in the tool's response exactly as specified.",
             description: implement.description,
             agent: "conductor_implementer",
           },
           "conductor_status": {
-            template: "Use the conductor_status tool to display the current progress of the project.",
+            template: "Use the conductor_status tool to display the current progress of the project. After calling the tool, you MUST follow all instructions provided in the tool's response exactly as specified.",
             description: status.description,
             agent: "conductor",
           },
           "conductor_revert": {
-            template: "Use the conductor_revert tool to revert previous work. If a target was provided as an argument with this command (e.g., 'track <track_id>', 'phase <phase_name>', 'task <task_name>'), pass it as the 'target' parameter to the tool.",
+            template: "Use the conductor_revert tool to revert previous work. If a target was provided as an argument with this command (e.g., 'track <track_id>', 'phase <phase_name>', 'task <task_name>'), pass it as the 'target' parameter to the tool. After calling the tool, you MUST follow all instructions provided in the tool's response exactly as specified.",
             description: revert.description,
             agent: "conductor",
           },
