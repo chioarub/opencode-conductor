@@ -22,7 +22,7 @@ const safeRead = async (path: string) => {
 
 const ConductorPlugin: Plugin = async (ctx) => {
   try {
-    console.log("[Conductor] Initializing plugin...");
+    console.log("[Conductor] Initializing plugin..."); 
 
     const backgroundManager = new BackgroundManager(ctx);
 
