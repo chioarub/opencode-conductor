@@ -11,6 +11,7 @@ interface ConductorCommandConfig {
   name: string
   description: string
   args: Record<string, any>
+  requiresSetup?: boolean
   additionalContext?: (ctx: PluginInput, args: any) => Promise<Record<string, string>>
 }
 
@@ -54,7 +55,7 @@ export function createConductorCommand(config: ConductorCommandConfig) {
     return tool({
       description: config.description,
       args: config.args,
-      async execute(args: any) {
+      async execute(args: any, context: any) {
         // Get additional context if provided (this can override/extend args)
         const additionalContext = config.additionalContext
           ? await config.additionalContext(ctx, args)

@@ -15,7 +15,7 @@ export const implementCommand = createConductorCommand({
   },
   additionalContext: async (ctx, args) => {
     // 1. Choose strategy based on OMO activity
-    const strategyFile = ctx.isOMOActive ? "delegate.md" : "manual.md";
+    const strategyFile = (ctx as any).isOMOActive ? "delegate.md" : "manual.md";
     const strategyPath = join(__dirname, "../prompts/strategies", strategyFile);
     
     let strategySection = "";
