@@ -23,6 +23,8 @@ jobs:
       # 1. Checks out your repository's code
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # 2. Create TAR archive
       - name: Create TAR archive
