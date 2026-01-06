@@ -1,3 +1,16 @@
+# [1.25.0](https://github.com/derekbar90/opencode-conductor/compare/v1.24.0...v1.25.0) (2026-01-06)
+
+
+### Bug Fixes
+
+* **tests:** align tests with reverted code and add test script ([e5abd86](https://github.com/derekbar90/opencode-conductor/commit/e5abd865b535ccdac93c3130aaed1675d19af504))
+* **tests:** resolve TS errors by adding mock tool context ([584f7a5](https://github.com/derekbar90/opencode-conductor/commit/584f7a57cd93cb398e06d313a8fd30a6d243f8a0))
+
+
+### Features
+
+* **release:** restore state from commit 24a84aa ([2ff3d59](https://github.com/derekbar90/opencode-conductor/commit/2ff3d59b66160588a0d73449661d3a0c298a8836))
+
 ## [1.8.2](https://github.com/derekbar90/opencode-conductor/compare/v1.8.1...v1.8.2) (2025-12-31)
 
 
