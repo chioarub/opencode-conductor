@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/derekbar90/opencode-conductor/compare/v1.16.0...v1.17.0) (2026-01-06)
+
+
+### Features
+
+* **plugin:** Add delegation tools, background tasks, and specialized implementer agent ([afcd777](https://github.com/derekbar90/opencode-conductor/commit/afcd777c9adae4379d928d7a16f16d887846e2de))
+
 # [1.16.0](https://github.com/derekbar90/opencode-conductor/compare/v1.15.0...v1.16.0) (2026-01-06)
 
 
