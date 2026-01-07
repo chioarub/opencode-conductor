@@ -49,7 +49,7 @@ export const MyPlugin: Plugin = async ({
       .map((f) => {
         const content = fs.readFileSync(f, "utf-8");
         const relPath = path.relative(directory, f);
-        return `<File path="${relPath}">\n${content}\n</File>`;
+        return `<${f} path="${relPath}">\n${content}\n</${f}>`;
       })
       .join("\n\n");
   }
@@ -98,10 +98,12 @@ export const MyPlugin: Plugin = async ({
         },
         "conductor:status": {
           template: StatusPrompt.prompt + `
-          Environment Details: 
-            - Directory: ${directory}
-            - Conductor Setup: ${setupOccurred}
-            - Current Conductor Files (Location: ${directory}/conductor)
+
+          
+          ***Current Environment Details***: 
+            - Current Working Directory: ${directory}
+            - Conductor Setup Process Completed: ${setupOccurred}
+            - Current Conductor Files (with tracks) (${directory}/conductor)
                 File Tree:
                   ${fileHeirarchy}
         `,
