@@ -37,7 +37,7 @@
     "prepublishOnly": "npm run update-submodule && npm run build"
   },
   "dependencies": {
-    "@opencode-ai/plugin": "^1.0.209",
+    "@opencode-ai/plugin": "1.0.223",
     "smol-toml": "^1.6.0"
   },
   "devDependencies": {
