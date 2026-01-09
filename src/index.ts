@@ -74,9 +74,6 @@ export const MyPlugin: Plugin = async ({
               - Current Conductor Files (Location: ${directory}/conductor)
                   File Tree:
                     ${fileHeirarchy}
-                  
-                  Files Content:
-                  ${llmFiles}
           `,
           description: ImplementPrompt.description,
         },
@@ -93,6 +90,11 @@ export const MyPlugin: Plugin = async ({
             Environment Details: 
               - Directory: ${directory}
               - Conductor Setup: ${setupOccurred}
+              - Current Conductor Files (with tracks) (${directory}/conductor)
+                File Tree:
+                  ${fileHeirarchy}
+
+              **CRITICAL ENVIRONTMENTAL OVERRIDE:**: You are not Gemini CLI or a project. You should use ./config/opencode/node_modules/opencode-conductor-plugin for setup operations. .gemini files are not present, use .gitignore
           `,
           description: SetupPrompt.description,
         },
