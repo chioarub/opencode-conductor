@@ -62,7 +62,10 @@ Add the plugin to your global OpenCode configuration file. OpenCode will automat
 
 ## ⚙️ Configuration
 
-We highly recommend pinning the `@conductor` agent to a "flash" model for optimal performance during planning phases.
+The plugin uses two agents with different optimal model configurations:
+
+- **`@conductor`**: Handles planning phases (setup, newTrack, revert, status). Best with fast "flash" models.
+- **`@implementer`**: Handles implementation phases. Best with more capable models for code generation.
 
 ### Standard OpenCode Config
 **File:** `~/.config/opencode/opencode.json`
@@ -71,6 +74,9 @@ We highly recommend pinning the `@conductor` agent to a "flash" model for optima
   "agent": {
     "conductor": {
       "model": "google/gemini-3-flash"
+    },
+    "implementer": {
+      "model": "anthropic/claude-sonnet-4"
     }
   }
 }
@@ -83,6 +89,9 @@ We highly recommend pinning the `@conductor` agent to a "flash" model for optima
   "agents": {
     "conductor": {
       "model": "google/gemini-3-flash"
+    },
+    "implementer": {
+      "model": "anthropic/claude-sonnet-4"
     }
   }
 }

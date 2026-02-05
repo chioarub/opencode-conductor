@@ -12,7 +12,7 @@ export async function bootstrap(ctx: any) {
   const targetCommandDir = join(opencodeConfigDir, "command");
 
   const sourcePromptsDir = join(__dirname, "../prompts");
-  const sourceAgentFile = join(sourcePromptsDir, "agent/conductor.md");
+  const sourceAgentsDir = join(sourcePromptsDir, "agent");
   const sourceCommandsDir = join(sourcePromptsDir, "commands");
 
   let installedAnything = false;
@@ -21,11 +21,14 @@ export async function bootstrap(ctx: any) {
   if (!existsSync(targetAgentDir)) mkdirSync(targetAgentDir, { recursive: true });
   if (!existsSync(targetCommandDir)) mkdirSync(targetCommandDir, { recursive: true });
 
-  // 2. Install/Update Agent
-  const targetAgentFile = join(targetAgentDir, "conductor.md");
-  if (existsSync(sourceAgentFile)) {
-    copyFileSync(sourceAgentFile, targetAgentFile);
-    installedAnything = true;
+  // 2. Install/Update All Agents (conductor, implementer)
+  if (existsSync(sourceAgentsDir)) {
+    const agents = readdirSync(sourceAgentsDir);
+    for (const agentFile of agents) {
+      const targetAgentFile = join(targetAgentDir, agentFile);
+      copyFileSync(join(sourceAgentsDir, agentFile), targetAgentFile);
+      installedAnything = true;
+    }
   }
 
   // 3. Install/Update Commands

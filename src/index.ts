@@ -120,7 +120,7 @@ export const MyPlugin: Plugin = async (ctx) => {
       _config.command = {
         ..._config.command,
         "conductor:implement": {
-          agent: "conductor",
+          agent: "implementer",
           template: ImplementPrompt.prompt + `
             Environment Details: 
               - Directory: ${directory}
