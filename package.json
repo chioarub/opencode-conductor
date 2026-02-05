@@ -30,7 +30,8 @@
   "scripts": {
     "test": "vitest run",
     "postinstall": "node scripts/postinstall.cjs",
-    "build": "rm -rf dist && npm run convert-legacy && tsc && npm run copy-assets",
+    "write-build-info": "node scripts/write-build-info.cjs",
+    "build": "rm -rf dist && tsc && npm run write-build-info && npm run copy-assets",
     "convert-legacy": "node scripts/convert-legacy.cjs",
     "copy-assets": "mkdir -p dist/templates && cp -r src/templates/* dist/templates/ && mkdir -p dist/prompts && cp -r src/prompts/* dist/prompts/",
     "update-submodule": "git submodule update --init --recursive --remote",
