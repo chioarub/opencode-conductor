@@ -19,17 +19,20 @@ All tasks follow a strict lifecycle:
 
 2. **Mark In Progress:** Before beginning work, edit `plan.md` and change the task from `[ ]` to `[~]`
 
-3. **Write Failing Tests (Red Phase):**
-   - Create a new test file for the feature or bug fix.
-   - Write one or more unit tests that clearly define the expected behavior and acceptance criteria for the task.
-   - **CRITICAL:** Run the tests and confirm that they fail as expected. This is the "Red" phase of TDD. Do not proceed until you have failing tests.
+3. **Implement the Feature (Implementation Phase):**
+   - **CRITICAL:** You MUST write the ACTUAL functional implementation code that fulfills the task requirements. Do NOT create stub files, empty implementations, or placeholder code.
+   - Read the task description and the `spec.md` carefully to understand exactly what functionality is required.
+   - Write complete, working code that implements the feature or fixes the bug as described.
+   - The implementation MUST be functional - it should actually perform the operations described in the spec.
+   - **Verification:** Before proceeding, manually verify that your implementation compiles/runs without syntax errors.
 
-4. **Implement to Pass Tests (Green Phase):**
-   - Write the minimum amount of application code necessary to make the failing tests pass.
-   - Run the test suite again and confirm that all tests now pass. This is the "Green" phase.
+4. **Write Tests for the Implementation (Testing Phase):**
+   - After the implementation is complete, create a test file for the feature or bug fix.
+   - Write unit tests that validate the behavior of your implementation based on the acceptance criteria in the spec.
+   - **CRITICAL:** Run the tests and confirm they PASS. If tests fail, fix either the implementation or the tests until all pass.
 
 5. **Refactor (Optional but Recommended):**
-   - With the safety of passing tests, refactor the implementation code and the test code to improve clarity, remove duplication, and enhance performance without changing the external behavior.
+   - With the safety of passing tests, refactor both the implementation and test code to improve clarity, remove duplication, and enhance performance.
    - Rerun tests to ensure they still pass after refactoring.
 
 6. **Verify Coverage:** Run coverage reports using the project's chosen tools. For example, in a Python project, this might look like:
@@ -95,20 +98,14 @@ All tasks follow a strict lifecycle:
         - If "skip_and_report": Log the failure and continue to the next task.
         - If "stop_and_ask": Ask the user for guidance.
 
-4.  **Conditional User Verification:**
-    -   **IF ALL of the following are true:**
-        - All automated tests passed on first run (no retries needed)
-        - Code coverage is ≥80% (meets threshold)
-        - No linting errors were found
-    
-    **THEN:** Auto-proceed with brief log:
-    > "Phase '<phase_name>' verified: All tests pass, coverage meets threshold. Proceeding to checkpoint."
-    
-    **OTHERWISE:** Present manual verification plan and await confirmation:
-    -   **Generate Verification Plan:** Analyze `product.md`, `product-guidelines.md`, and `plan.md` to determine the user-facing goals of the completed phase.
-    -   Present a step-by-step plan for manual verification with expected outcomes.
-    -   Ask: "**Does this meet your expectations? Please confirm with yes or provide feedback.**"
-    -   **PAUSE** and await the user's response before proceeding.
+4.  **Phase Summary (No User Input Required):**
+    -   Generate a verification summary including:
+        - Test results (pass/fail count, any retries needed)
+        - Code coverage percentage achieved
+        - Linting status (errors found or clean)
+    -   **Log the summary** for the git notes but do NOT ask for user confirmation.
+    -   **Auto-proceed** to checkpoint creation regardless of status.
+    -   If there were failures or issues, include them in the git notes for auditing purposes.
 
 5.  **Create Checkpoint Commit:**
     -   Stage all changes. If no changes occurred in this step, proceed with an empty commit.
